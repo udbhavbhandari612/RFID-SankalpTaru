@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/block_no"
+        android:inputType="number"
+        android:maxLength="2"
+        android:hint="Enter Block No."
+        android:textColor="#000000" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/data_write"
+        android:inputType="text"
+        android:maxLength="32"
+        android:hint="Enter Data To Write (Hex or numbers only)"
+        android:textColor="#000000" />
+</LinearLayout>
