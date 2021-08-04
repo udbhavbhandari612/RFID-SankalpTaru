@@ -19,7 +19,8 @@ public class OEMHelper {
     private static final int[] invalidBlocks = new int[]{0, 3, 7, 11, 15, 19, 23, 27, 31, 35, 39, 43, 47, 51, 55, 59, 63};
 
     public static void readMifareCard(BleDevice sBleDevice, MifareData mfData) {
-        final int[] blocks = new int[]{1, 2, 4, 5, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18, 20, 21};
+
+        final int[] blocks = new int[]{1, 2, 4, 5, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18, 20, 21, 22, 24, 25, 26, 28, 29, 30, 32, 33, 34, 36, 37, 38, 40, 41, 42};
         final Map<String, String> data = new HashMap<>();
         sBleDevice.requestRfmSearchCard(ComByteManager.ISO14443_P4, (blnIsSus, cardType, bytCardSn, bytCarATS) -> new Thread(() -> {
             try {
@@ -175,9 +176,15 @@ public class OEMHelper {
                 accessor = "tree_id";
                 break;
             case 5:
+            case 22:
+            case 24:
+            case 25:
                 accessor = "tree_name";
                 break;
             case 6:
+            case 26:
+            case 28:
+            case 29:
                 accessor = "species";
                 break;
             case 8:
@@ -191,10 +198,20 @@ public class OEMHelper {
             case 16:
             case 17:
             case 18:
+            case 30:
+            case 32:
+            case 33:
+            case 34:
+            case 36:
+            case 37:
+            case 38:
+            case 40:
                 accessor = "tree_url";
                 break;
             case 20:
             case 21:
+            case 41:
+            case 42:
                 accessor = "beneficiary_name";
                 break;
         }
@@ -214,9 +231,15 @@ public class OEMHelper {
                 break;
             case "tree_name":
                 blocks.add(5);
+                blocks.add(22);
+                blocks.add(24);
+                blocks.add(25);
                 break;
             case "species":
                 blocks.add(6);
+                blocks.add(26);
+                blocks.add(28);
+                blocks.add(29);
                 break;
             case "plantation_date":
                 blocks.add(8);
@@ -230,10 +253,20 @@ public class OEMHelper {
                 blocks.add(16);
                 blocks.add(17);
                 blocks.add(18);
+                blocks.add(30);
+                blocks.add(32);
+                blocks.add(33);
+                blocks.add(34);
+                blocks.add(36);
+                blocks.add(37);
+                blocks.add(38);
+                blocks.add(40);
                 break;
             case "beneficiary_name":
                 blocks.add(20);
                 blocks.add(21);
+                blocks.add(41);
+                blocks.add(42);
                 break;
             default:
                 blocks.add(62);

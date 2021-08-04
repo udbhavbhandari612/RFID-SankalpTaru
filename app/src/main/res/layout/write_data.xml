@@ -9,6 +9,36 @@
     android:padding="10dp">
 
     <EditText
+        android:id="@+id/editTextBeneficiariesName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:ems="10"
+        android:hint="Enter Beneficiary Name (64 characters)"
+        android:inputType="textPersonName"
+        android:maxLength="32" />
+
+    <EditText
+        android:id="@+id/editTextTreeId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:ems="10"
+        android:hint="Enter Tree ID (16 characters)"
+        android:inputType="number"
+        android:maxLength="16" />
+
+    <EditText
+        android:id="@+id/editTextSpecies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:ems="10"
+        android:hint="Enter Species (64 characters)"
+        android:inputType="textPersonName"
+        android:maxLength="16" />
+
+    <EditText
         android:id="@+id/editTextLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,35 +82,25 @@
     </TableLayout>
 
     <EditText
-        android:id="@+id/editTextTreeId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:ems="10"
-        android:hint="Enter Tree ID (16 characters)"
-        android:inputType="number"
-        android:maxLength="16" />
-
-    <EditText
         android:id="@+id/editTextTreeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:ems="10"
-        android:hint="Enter Tree Name (16 characters)"
+        android:hint="Enter Tree Name (64 characters)"
         android:inputType="textPersonName"
         android:maxLength="16" />
 
+
     <EditText
-        android:id="@+id/editTextSpecies"
+        android:id="@+id/editTextTreeUrl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:ems="10"
-        android:hint="Enter Species (16 characters)"
+        android:hint="Enter Tree URL (256 characters)"
         android:inputType="textPersonName"
-        android:maxLength="16" />
-
+        android:maxLength="128" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -112,26 +132,6 @@
         android:layout_marginBottom="15dp"
         android:layout_weight="1"
         android:background="?android:attr/listDivider" />
-
-    <EditText
-        android:id="@+id/editTextTreeUrl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:ems="10"
-        android:hint="Enter Tree URL (128 characters)"
-        android:inputType="textPersonName"
-        android:maxLength="128" />
-
-    <EditText
-        android:id="@+id/editTextBeneficiariesName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:ems="10"
-        android:hint="Enter Beneficiary Name (32 characters)"
-        android:inputType="textPersonName"
-        android:maxLength="32" />
 
     <TextView
         android:id="@+id/textView6"

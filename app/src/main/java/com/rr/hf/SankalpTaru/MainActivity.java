@@ -662,12 +662,20 @@ public class MainActivity extends AppCompatActivity {
 
         if (editTextTreeName.getText() != null && editTextTreeName.getText().toString().trim().length() != 0) {
             String treeName = editTextTreeName.getText().toString();
-            maps.put("5", StringHelper.stringToBytes(treeName, 16));
+            byte[] dataToWrite = StringHelper.stringToBytes(treeName, 64);
+            maps.put("5", Arrays.copyOfRange(dataToWrite, 0, 16));
+            maps.put("22", Arrays.copyOfRange(dataToWrite, 16, 32));
+            maps.put("24", Arrays.copyOfRange(dataToWrite, 32, 48));
+            maps.put("25", Arrays.copyOfRange(dataToWrite, 48, 64));
         }
 
         if (editTextSpecies.getText() != null && editTextSpecies.getText().toString().trim().length() != 0) {
             String species = editTextSpecies.getText().toString();
-            maps.put("6", StringHelper.stringToBytes(species, 16));
+            byte[] dataToWrite = StringHelper.stringToBytes(species, 64);
+            maps.put("6", Arrays.copyOfRange(dataToWrite, 0, 16));
+            maps.put("26", Arrays.copyOfRange(dataToWrite, 16, 32));
+            maps.put("28", Arrays.copyOfRange(dataToWrite, 32, 48));
+            maps.put("29", Arrays.copyOfRange(dataToWrite, 48, 64));
         }
 
         if (textViewDateOfPlantation.getText().toString().contains("/")) {
@@ -677,7 +685,25 @@ public class MainActivity extends AppCompatActivity {
 
         if (editTextTreeUrl.getText() != null && editTextTreeUrl.getText().toString().trim().length() != 0) {
             String treeUrl = editTextTreeUrl.getText().toString();
-            byte[] dataToWrite = StringHelper.stringToBytes(treeUrl, 128);
+            byte[] dataToWrite = StringHelper.stringToBytes(treeUrl, 256);
+            maps.put("9", Arrays.copyOfRange(dataToWrite, 0, 16));
+            maps.put("10", Arrays.copyOfRange(dataToWrite, 16, 32));
+            maps.put("12", Arrays.copyOfRange(dataToWrite, 32, 48));
+            maps.put("13", Arrays.copyOfRange(dataToWrite, 48, 64));
+            maps.put("14", Arrays.copyOfRange(dataToWrite, 64, 80));
+            maps.put("16", Arrays.copyOfRange(dataToWrite, 80, 96));
+            maps.put("17", Arrays.copyOfRange(dataToWrite, 96, 112));
+            maps.put("18", Arrays.copyOfRange(dataToWrite, 112, 128));
+            maps.put("30", Arrays.copyOfRange(dataToWrite, 128, 144));
+            maps.put("32", Arrays.copyOfRange(dataToWrite, 144, 160));
+            maps.put("33", Arrays.copyOfRange(dataToWrite, 160, 176));
+            maps.put("34", Arrays.copyOfRange(dataToWrite, 176, 192));
+            maps.put("36", Arrays.copyOfRange(dataToWrite, 192, 208));
+            maps.put("37", Arrays.copyOfRange(dataToWrite, 208, 224));
+            maps.put("38", Arrays.copyOfRange(dataToWrite, 224, 240));
+            maps.put("40", Arrays.copyOfRange(dataToWrite, 240, 256));
+            /*
+            Dynamic Block Allocation
             int start = 0, end = 16, i = 9;
             while (end <= 128) {
                 if ((i + 1) % 4 != 0) {
@@ -686,14 +712,16 @@ public class MainActivity extends AppCompatActivity {
                     end += 16;
                 }
                 i++;
-            }
+            }*/
         }
 
         if (editTextBeneficiaryName.getText() != null && editTextBeneficiaryName.getText().toString().trim().length() != 0) {
             String beneficiaryName = editTextBeneficiaryName.getText().toString();
-            byte[] dataToWrite = StringHelper.stringToBytes(beneficiaryName, 32);
+            byte[] dataToWrite = StringHelper.stringToBytes(beneficiaryName, 64);
             maps.put("20", Arrays.copyOfRange(dataToWrite, 0, 16));
             maps.put("21", Arrays.copyOfRange(dataToWrite, 16, 32));
+            maps.put("41", Arrays.copyOfRange(dataToWrite, 32, 48));
+            maps.put("42", Arrays.copyOfRange(dataToWrite, 48, 64));
         }
         try {
             if (maps.size() != 0) {
@@ -805,9 +833,7 @@ public class MainActivity extends AppCompatActivity {
                             myBuilder.setPositiveButton("Delete", (dialog, which) -> {
                             });
 
-                            myBuilder.setNegativeButton("Cancel", (dialog, which) -> {
-                                dialog.cancel();
-                            });
+                            myBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
                             final AlertDialog dialog = myBuilder.create();
                             dialog.show();
                             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v1 -> {
@@ -893,7 +919,7 @@ public class MainActivity extends AppCompatActivity {
                             //key.setWidth((int) (width / 2.7));
                             deleteBox.setScaleX(0.80F);
                             deleteBox.setScaleY(0.80F);
-                            value.setWidth((int) (width / 2));
+                            value.setWidth(width / 2);
 
                             key.setTextIsSelectable(true);
                             value.setTextIsSelectable(true);
