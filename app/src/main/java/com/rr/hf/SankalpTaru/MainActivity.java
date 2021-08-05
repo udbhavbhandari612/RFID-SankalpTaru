@@ -904,7 +904,24 @@ public class MainActivity extends AppCompatActivity {
                         StringBuilder mapLink = new StringBuilder();
                         tl.addView(deleteSelected);
 
-                        for (Map.Entry<String, String> entry : data.entrySet()) {
+                        //Re-arrange the data
+                        Map<String, String> sortedData = new HashMap<>();
+                        String[] keys = new String[]{
+                                "latitude",
+                                "longitude",
+                                "tree_id",
+                                "tree_name",
+                                "species",
+                                "plantation_date",
+                                "tree_url",
+                                "beneficiary_name"
+                        };
+
+                        for(String key: keys){
+                            sortedData.put(key,data.get(key));
+                        }
+
+                        for (Map.Entry<String, String> entry : sortedData.entrySet()) {
                             TableRow tr = new TableRow(dialogView.getContext());
                             CheckBox deleteBox = new CheckBox(dialogView.getContext());
                             deleteBox.setId(View.generateViewId());
