@@ -23,6 +23,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.speech.tts.TextToSpeech;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
     //new fields specific read/write variables
 
     private StringBuffer msgBuffer;
+    private StringBuilder ttsScript;
     private BluetoothDevice mNearestBle = null;
     private final Lock mNearestBleLock = new ReentrantLock();
     private int lastRssi = -100;
@@ -122,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> deviceListAdapter = null;
     private AlertDialog deviceRelatedDialog;
     private SharedPreferences sharedPreferences;
+    private TextToSpeech tts;
 
 
     private final ScannerCallback scannerCallback = new ScannerCallback() {
@@ -363,6 +366,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         msgBuffer = new StringBuffer();
+        ttsScript = new StringBuilder();
+
+        tts = new TextToSpeech(this, new OnTTSInitListener());
 
         msgText = findViewById(R.id.logTxt);
         msgText.setTextIsSelectable(true);
@@ -508,6 +514,14 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+        }
+    }
+
+    private class OnTTSInitListener implements TextToSpeech.OnInitListener {
+
+        @Override
+        public void onInit(int status) {
+            tts.setLanguage(Locale.US);
         }
     }
 
@@ -779,6 +793,7 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder myBuilder = new AlertDialog.Builder(MainActivity.this);
             myBuilder.setTitle("Data on SankalpTaru RFID tag");
             myBuilder.setView(dialogView);
+
             myBuilder.setCancelable(false);
 
             mfData.setOnMifareDataListener(new OnMifareDataListener() {
@@ -788,6 +803,8 @@ public class MainActivity extends AppCompatActivity {
 
                     runOnUiThread(() -> {
                         boolean isEmpty = true;
+                        if (ttsScript.length() > 0)
+                            ttsScript.delete(0, ttsScript.length());
 
                         LinearLayout progress = dialogView.findViewById(R.id.linearLayoutProgress);
                         TableLayout tl = dialogView.findViewById(R.id.tableLayoutReadData);
@@ -886,6 +903,7 @@ public class MainActivity extends AppCompatActivity {
 
                         StringBuilder mapLink = new StringBuilder();
                         tl.addView(deleteSelected);
+
                         for (Map.Entry<String, String> entry : data.entrySet()) {
                             TableRow tr = new TableRow(dialogView.getContext());
                             CheckBox deleteBox = new CheckBox(dialogView.getContext());
@@ -924,6 +942,20 @@ public class MainActivity extends AppCompatActivity {
                             key.setTextIsSelectable(true);
                             value.setTextIsSelectable(true);
                             value.setTextColor(Color.rgb(0, 0, 0));
+                            if (entry.getValue().trim().length() > 0) {
+                                switch (entry.getKey()) {
+                                    case "tree_id":
+                                        ttsScript.append("\nMy Tree ID is ").append(entry.getValue());
+                                    case "tree_name":
+                                        ttsScript.append("\nMy Name is ").append(entry.getValue());
+                                    case "species":
+                                        ttsScript.append("\nI belongs to ").append(entry.getValue());
+                                    case "plantation_date":
+                                        ttsScript.append("\nI was planted on ").append(entry.getValue());
+                                    case "beneficiary_name":
+                                        ttsScript.append("\nMy Beneficiary is ").append(entry.getValue());
+                                }
+                            }
 
                             if (entry.getKey().equals("latitude") || entry.getKey().equals("longitude")) {
                                 if (entry.getValue().trim().length() == 0) {
@@ -971,6 +1003,8 @@ public class MainActivity extends AppCompatActivity {
                             tl.addView(tr);
                             tl.addView(divider);
                         }
+
+                        tts.speak(ttsScript.toString(), TextToSpeech.QUEUE_FLUSH, null, "");
                     });
 
                 }
